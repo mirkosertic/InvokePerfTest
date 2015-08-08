@@ -1,21 +1,20 @@
 package de.mirkosertic.invoke.perftest;
 
-public class ExpensiveAction implements Runnable {
+public class ExpensiveAction implements ProfilerAction {
 
-    private static double callme() {
-        return Math.random() * Math.PI;
+    private static double callme(long aCounter) {
+        return Math.random() * Math.PI * aCounter;
     }
 
-    private double anotherdoit() {
-        return callme();
+    private double anotherdoit(long aCounter) {
+        return callme(aCounter);
     }
 
-    private double doit() {
-        return anotherdoit();
+    private double doit(long aCounter) {
+        return anotherdoit(aCounter);
     }
 
-    @Override
-    public void run() {
-        doit();
+    public void run(long aCounter) {
+        doit(aCounter);
     }
 }

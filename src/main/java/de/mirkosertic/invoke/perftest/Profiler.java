@@ -3,9 +3,9 @@ package de.mirkosertic.invoke.perftest;
 public class Profiler {
 
     private final String name;
-    private final Runnable action;
+    private final ProfilerAction action;
 
-    public Profiler(String aName, Runnable aAction) {
+    public Profiler(String aName, ProfilerAction aAction) {
         name = aName;
         action = aAction;
     }
@@ -18,13 +18,13 @@ public class Profiler {
         System.out.println("= Real runs = " + aNumberOfRuns);
         long theWarmupstart = System.currentTimeMillis();
         for (long i=0;i<aNumberOfWarmups;i++) {
-            action.run();
+            action.run(i);
         }
         long theWarmupDuration = System.currentTimeMillis() - theWarmupstart;
         System.out.println("= Warmup took " +theWarmupDuration + "ms");
         long theRealStart = System.currentTimeMillis();
         for (long i=0;i<aNumberOfRuns;i++) {
-            action.run();
+            action.run(i);
         }
         long theRealDuration = System.currentTimeMillis() - theRealStart;
         System.out.println("= Real run took " +theRealDuration + "ms");

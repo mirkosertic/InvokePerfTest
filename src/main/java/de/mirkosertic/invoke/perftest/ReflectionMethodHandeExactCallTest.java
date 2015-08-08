@@ -9,16 +9,16 @@ public class ReflectionMethodHandeExactCallTest {
     public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException {
 
         final ExpensiveAction theAction = new ExpensiveAction();
-        Method theMethod = theAction.getClass().getMethod("run");
+        Method theMethod = theAction.getClass().getMethod("run", long.class);
 
         MethodHandles.Lookup theLookup = MethodHandles.lookup();
         final MethodHandle theHandle = theLookup.unreflect(theMethod);
 
-        Runnable theReflectiveMethod = new Runnable() {
+        ProfilerAction theReflectiveMethod = new ProfilerAction() {
             @Override
-            public void run() {
+            public void run(long aCounter) {
                 try {
-                    theHandle.invokeExact(theAction);
+                    theHandle.invokeExact(theAction, aCounter);
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }

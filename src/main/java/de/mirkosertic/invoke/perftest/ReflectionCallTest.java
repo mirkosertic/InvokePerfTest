@@ -7,13 +7,13 @@ public class ReflectionCallTest {
     public static void main(String[] args) throws NoSuchMethodException {
 
         final ExpensiveAction theAction = new ExpensiveAction();
-        final Method theMethod = theAction.getClass().getMethod("run");
+        final Method theMethod = theAction.getClass().getMethod("run", new Class[] {long.class});
 
-        Runnable theReflectiveMethod = new Runnable() {
+        ProfilerAction theReflectiveMethod = new ProfilerAction() {
             @Override
-            public void run() {
+            public void run(long aCounter) {
                 try {
-                    theMethod.invoke(theAction);
+                    theMethod.invoke(theAction, aCounter);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
